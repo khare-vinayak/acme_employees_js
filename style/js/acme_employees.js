@@ -44,21 +44,56 @@ const employees = [
   }
 
   function findManagementChainForEmployee(employee,employees){
-    debugger;
     let employeeChain=[];
     while(employee.managerId!=undefined){
         employee= findManagerFor(employee,employees);
-        employeeChain.push(employee);
+        employeeChain.unshift(employee);
     }
     return employeeChain;
+  
+    // recursion
+    //let employeeChain=[];
+/*    if (employee.managerId=== undefined){
+      return [];
+    }
+      let manager=findManagerFor(employee,employees);
+      let employeeChain=findManagementChainForEmployee(manager,employees);
+      return employeeChain.concat(manager);
+*/
   }
   
+  
+  
   function generateManagementTree(employees){
+    
+    /*function reportingEmployee(employee,employees){
+       let manager=findManagerFor(employee,employees);
+      if(employee.managerId!==undefined && employee.managerId===manager.id){
+        return employee;
+      }
+    }
+    for (let i=0 ; i<employees.length;i++){
+      console.log(reportingEmployee(employees[i],employees));
+      //employees[i].reports.push(reportingEmployee(employees[i],employees));
+    }
+    console.log (employees);
+  */
 
+   let reports=[];
+   for (let i=0;i<employees.length;i++){
+    let manager=employees[i].managerId;
+    let employee=employees.filter(element=>{
+               if (element.id === manager){
+                 return element;
+               }
+    });
+    console.log(employee);
+     }
   }
-  function displayManagementTree(employees){
+  /*function displayManagementTree(employees){
       
-  }
+  }*/
+  
   spacer('findEmployeeByName Moe')
   // given a name and array of employees, return employee
   console.log(findEmployeeByName('moe', employees));//{ id: 1, name: 'moe' }
