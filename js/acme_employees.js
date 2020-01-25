@@ -16,7 +16,11 @@ const employees = [
     const stars = new Array(5).fill('*').join('');
     console.log(`${stars} ${text} ${stars}`);
   }
-  
+  //[pk] good job using "find". however, you are not quite using it optimally.
+  //[pk] the arrow function passed in to "find" should return a boolean (true or false)
+  //[pk] yours returns an employee (x). it just so happens that objects are truthy and
+  //[pk] failing to return in a function returns undefined which is falsey, so your function
+  //[pk] does produce the right result. but look at the solution for a much more concise approach!
   function findEmployeeByName(name,employees){
     return employees.find(x=>{
             if(x.name===name){
@@ -25,7 +29,9 @@ const employees = [
             }
     });
   }
-
+  
+  //[pk] same as above!
+  //[pk] also another thing: try to make your variable names more semantic. so not "x". maybe "otherEmployee" or sthing
   function findManagerFor(employee,employees){
         return employees.find(x=>{
             if((x.id===employee.managerId)){
@@ -34,6 +40,8 @@ const employees = [
         });
     }
   
+  //[pk] good use of filter here! but again same issue as above -- your arrow function should ideally return a boolean. see the solution.
+  //[pk] also you forgot to exclude the employee themself -- add another condition so that employee!=x
   function findCoworkersFor(employee,employees){
     let coworker=employees.filter(x=>{
         if(employee.managerId===x.managerId){
@@ -43,6 +51,7 @@ const employees = [
     return coworker;
   }
 
+  //[pk] great! you should add some spacing to make the code more readable ("let x = y" not "let x=y", etc.)
   function findManagementChainForEmployee(employee,employees){
     let employeeChain=[];
     while(employee.managerId!=undefined){
@@ -63,7 +72,7 @@ const employees = [
   }
   
   
-  
+  //[pk] nice helper function
   function reportingEmployee(employee,employees){
     let reportee=employees.filter(x=>employee.id=== x.managerId);
     employee.reports=reportee;
@@ -73,6 +82,7 @@ const employees = [
     });
   }
   
+  //[pk] great! one issue here is that this mutates the incoming data. you generally want to avoid that.
   function generateManagementTree(employees){
    let root=employees.find(x=>x.managerId===undefined);
    console.log(root.name);
@@ -82,9 +92,10 @@ const employees = [
   return root;  
 }
 
-
+//[pk] this is really good! 
 function displayManagementTree(employee,count=0){
   console.log('-'.repeat(count).concat(employee.name));
+  //[pk] this if condition doesn't really add anything! you could just take it out
   if (employee.reports === undefined  ){
     return;
   }
